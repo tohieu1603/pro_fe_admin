@@ -8,6 +8,7 @@ import {
   ToolOutlined,
   CustomerServiceOutlined,
 } from "@ant-design/icons";
+import ReactMarkdown from "react-markdown";
 import type { Product } from "@/types";
 import ProductSidebar from "./product-sidebar";
 
@@ -35,13 +36,39 @@ export default function ProductDescriptionTab({ product }: ProductDescriptionTab
           </Card>
         )}
 
-        {/* Main Description */}
+        {/* Main Description - Render Markdown */}
         {product.description ? (
-          <div
-            className="product-description"
-            style={{ fontSize: 15, lineHeight: 1.8 }}
-            dangerouslySetInnerHTML={{ __html: product.description }}
-          />
+          <div className="product-description" style={{ fontSize: 15, lineHeight: 1.8 }}>
+            <ReactMarkdown
+              components={{
+                img: ({ src, alt }) => (
+                  <img src={src} alt={alt} style={{ maxWidth: "100%", borderRadius: 8, margin: "16px 0" }} />
+                ),
+                a: ({ href, children }) => (
+                  <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: "#1890ff" }}>
+                    {children}
+                  </a>
+                ),
+                h3: ({ children }) => (
+                  <h3 style={{ marginTop: 24, marginBottom: 12, fontSize: 18, fontWeight: 600 }}>{children}</h3>
+                ),
+                p: ({ children }) => (
+                  <p style={{ marginBottom: 12 }}>{children}</p>
+                ),
+                ul: ({ children }) => (
+                  <ul style={{ paddingLeft: 20, marginBottom: 12 }}>{children}</ul>
+                ),
+                li: ({ children }) => (
+                  <li style={{ marginBottom: 8 }}>{children}</li>
+                ),
+                strong: ({ children }) => (
+                  <strong style={{ color: "#1890ff" }}>{children}</strong>
+                ),
+              }}
+            >
+              {product.description}
+            </ReactMarkdown>
+          </div>
         ) : (
           <Paragraph style={{ fontSize: 15, lineHeight: 1.8 }}>
             Chưa có mô tả chi tiết cho sản phẩm này.
