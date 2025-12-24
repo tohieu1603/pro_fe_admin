@@ -9,3 +9,6 @@ export * from "./option-type.service";
 export * from "./import.service";
 export * from "./auth.service";
 export * from "./user.service";
+export * from "./article-category.service";
+export * from "./article.service";
+export * from "./region.service";

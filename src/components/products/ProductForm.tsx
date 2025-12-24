@@ -38,6 +38,7 @@ import {
   optionTypeService,
   variantService,
 } from "@/services";
+import ProductRegionPricing from "./ProductRegionPricing";
 import type {
   Product,
   Category,
@@ -976,6 +977,14 @@ export default function ProductForm({ productId }: ProductFormProps) {
                 <Switch />
               </Form.Item>
             </Card>
+
+            {/* Region Pricing - Only show for edit mode */}
+            {isEdit && (
+              <ProductRegionPricing
+                productId={productId}
+                basePrice={form.getFieldValue("basePrice") || 0}
+              />
+            )}
 
             <Card>
               <Space direction="vertical" style={{ width: "100%" }}>

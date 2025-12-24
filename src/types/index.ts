@@ -373,3 +373,192 @@ export interface ServiceInfo {
   createdAt: string;
   updatedAt: string;
 }
+
+// Article Types
+export interface ArticleCategory {
+  id: string;
+  parentId?: string;
+  parent?: ArticleCategory;
+  children?: ArticleCategory[];
+  name: string;
+  slug: string;
+  description?: string;
+  imageUrl?: string;
+  displayOrder: number;
+  isActive: boolean;
+  metaTitle?: string;
+  metaDescription?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export enum ArticleStatus {
+  DRAFT = "draft",
+  PUBLISHED = "published",
+  SCHEDULED = "scheduled",
+  ARCHIVED = "archived",
+}
+
+export interface Article {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  content: string;
+  featuredImage?: string;
+  featuredImageAlt?: string;
+  categoryId?: string;
+  category?: ArticleCategory;
+  authorId?: string;
+  author?: User;
+  status: ArticleStatus;
+  publishedAt?: string;
+  scheduledAt?: string;
+  // SEO fields
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string[];
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: string;
+  canonicalUrl?: string;
+  schemaMarkup?: Record<string, unknown>;
+  robotsIndex: boolean;
+  robotsFollow: boolean;
+  // Analytics
+  viewCount: number;
+  readingTime?: number;
+  // Flags
+  isFeatured: boolean;
+  isSticky: boolean;
+  displayOrder: number;
+  // Timestamps
+  createdAt: string;
+  updatedAt: string;
+  // Relations
+  tags?: Tag[];
+}
+
+export interface CreateArticleDTO {
+  title: string;
+  slug?: string;
+  excerpt?: string;
+  content: string;
+  featuredImage?: string;
+  featuredImageAlt?: string;
+  categoryId?: string;
+  authorId?: string;
+  status?: ArticleStatus;
+  scheduledAt?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string[];
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: string;
+  canonicalUrl?: string;
+  schemaMarkup?: Record<string, unknown>;
+  robotsIndex?: boolean;
+  robotsFollow?: boolean;
+  isFeatured?: boolean;
+  isSticky?: boolean;
+  displayOrder?: number;
+  tagIds?: string[];
+}
+
+// Region Types (Multi-tenant)
+export interface Region {
+  id: string;
+  name: string;
+  slug: string;
+  subdomain: string;
+  phone?: string;
+  phoneSecondary?: string;
+  email?: string;
+  address?: string;
+  city?: string;
+  province?: string;
+  zipcode?: string;
+  latitude?: number;
+  longitude?: number;
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImage?: string;
+  workingHours?: {
+    monday?: string;
+    tuesday?: string;
+    wednesday?: string;
+    thursday?: string;
+    friday?: string;
+    saturday?: string;
+    sunday?: string;
+  };
+  shippingFee: number;
+  freeShippingThreshold?: number;
+  displayOrder: number;
+  isDefault: boolean;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateRegionDTO {
+  name: string;
+  slug?: string;
+  subdomain?: string;
+  phone?: string;
+  phoneSecondary?: string;
+  email?: string;
+  address?: string;
+  city?: string;
+  province?: string;
+  zipcode?: string;
+  latitude?: number;
+  longitude?: number;
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImage?: string;
+  workingHours?: Record<string, string>;
+  shippingFee?: number;
+  freeShippingThreshold?: number;
+  displayOrder?: number;
+  isDefault?: boolean;
+  isActive?: boolean;
+}
+
+export interface ProductRegion {
+  id: string;
+  productId: string;
+  product?: Product;
+  regionId: string;
+  region?: Region;
+  price?: number;
+  compareAtPrice?: number;
+  stockQuantity: number;
+  lowStockThreshold: number;
+  isAvailable: boolean;
+  promotionText?: string;
+  shippingNote?: string;
+  deliveryDays?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateProductRegionDTO {
+  productId: string;
+  regionId: string;
+  price?: number;
+  compareAtPrice?: number;
+  stockQuantity?: number;
+  lowStockThreshold?: number;
+  isAvailable?: boolean;
+  promotionText?: string;
+  shippingNote?: string;
+  deliveryDays?: number;
+}

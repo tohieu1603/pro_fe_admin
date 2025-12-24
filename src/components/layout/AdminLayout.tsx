@@ -17,6 +17,8 @@ import {
   UserOutlined,
   LogoutOutlined,
   TeamOutlined,
+  FileTextOutlined,
+  GlobalOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { useAuth } from "@/contexts/AuthContext";
@@ -76,6 +78,16 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       key: "/tags",
       icon: <TagOutlined />,
       label: "Tags",
+    },
+    {
+      key: "/articles",
+      icon: <FileTextOutlined />,
+      label: "Bài viết",
+    },
+    {
+      key: "/regions",
+      icon: <GlobalOutlined />,
+      label: "Vùng/Chi nhánh",
     },
     // Admin only - Users management
     ...(isAdmin
