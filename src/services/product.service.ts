@@ -1,5 +1,5 @@
 import api, { ApiResponse, PaginationParams } from "@/lib/api";
-import { Product, Promotion, ServiceInfo } from "@/types";
+import { Product, Promotion, ServiceInfo, ProductMedia } from "@/types";
 
 export interface ProductParams extends PaginationParams {
   categoryId?: string;
@@ -80,6 +80,11 @@ export const productService = {
 
   getAllServices: async () => {
     const response = await api.get<ApiResponse<ServiceInfo[]>>("/products/services");
+    return response.data;
+  },
+
+  updateMedia: async (id: string, media: Partial<ProductMedia>[]) => {
+    const response = await api.put<ApiResponse<ProductMedia[]>>(`/products/${id}/media`, { media });
     return response.data;
   },
 };

@@ -12,3 +12,4 @@ export * from "./user.service";
 export * from "./article-category.service";
 export * from "./article.service";
 export * from "./region.service";
+export * from "./upload.service";

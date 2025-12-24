@@ -39,6 +39,7 @@ import {
   variantService,
 } from "@/services";
 import ProductRegionPricing from "./ProductRegionPricing";
+import ProductMediaUpload from "./ProductMediaUpload";
 import type {
   Product,
   Category,
@@ -47,6 +48,7 @@ import type {
   VariantOptionType,
   VariantOptionValue,
   ProductVariant,
+  ProductMedia,
 } from "@/types";
 import { VariantStatus } from "@/types";
 
@@ -93,6 +95,9 @@ export default function ProductForm({ productId }: ProductFormProps) {
   const [productOptions, setProductOptions] = useState<ProductOption[]>([]);
   const [variants, setVariants] = useState<VariantRow[]>([]);
 
+  // Media management state
+  const [productMedia, setProductMedia] = useState<ProductMedia[]>([]);
+
   const isEdit = !!productId;
 
   useEffect(() => {
@@ -124,6 +129,11 @@ export default function ProductForm({ productId }: ProductFormProps) {
             if (product.variants && product.variants.length > 0) {
               setHasVariants(true);
               loadExistingVariants(product.variants);
+            }
+
+            // Load media if exists
+            if (product.media && product.media.length > 0) {
+              setProductMedia(product.media);
             }
           }
         }
@@ -357,6 +367,11 @@ export default function ProductForm({ productId }: ProductFormProps) {
       // Save variants if product has variants
       if (productResult && hasVariants && variants.length > 0) {
         await saveVariants(productResult.id);
+      }
+
+      // Save media
+      if (productResult && productMedia.length > 0) {
+        await productService.updateMedia(productResult.id, productMedia);
       }
 
       message.success(isEdit ? "Cập nhật sản phẩm thành công" : "Tạo sản phẩm thành công");
@@ -640,6 +655,13 @@ export default function ProductForm({ productId }: ProductFormProps) {
                 />
               </Form.Item>
             </Card>
+
+            {/* Hình ảnh sản phẩm */}
+            <ProductMediaUpload
+              productId={productId}
+              media={productMedia}
+              onChange={setProductMedia}
+            />
 
             {/* Thông số kỹ thuật */}
             <Card title="Thông số kỹ thuật" style={{ marginBottom: 24 }}>
